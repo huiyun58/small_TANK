@@ -5,7 +5,7 @@
 			<parent link="rugby_base"></parent>
 			<child link="rugby_rplidar"></child>
 			<!--  rotate z axis 180 degree according to the placement on angelbot -->
-			<origin xyz="0.0376 0.00015 0.128" rpy="0 0 3.1415"></origin> 
+			<origin xyz="0.06 0.00075 0.22" rpy="0 0 3.1415"></origin> 
 		</joint>
 	  	<link name="rugby_rplidar">
 			<collision>

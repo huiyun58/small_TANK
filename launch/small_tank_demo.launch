@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+	<!-- <node name="map_server_nav" pkg="map_server" type="map_server" args="$(find rugby)/map/map_nav.yaml"/> -->
+	
+	<include file="$(find rugby)/launch/base_smalltank.launch"/>
+	<!-- <include file="$(find rugby)/launch/rplidar.launch" /> -->
+	<include file="$(find rugby)/launch/dwa_amcl.launch"/>
+
+
+	<!-- <node pkg="tf" type="static_transform_publisher" name="base_to_camera_tf" args="0.0 0.0 0.0 0.0 0.0 0.0 /map /my_frame 100" /> -->
+
+	<!-- <node name="map_server_amcl" pkg="map_server" type="map_server" args="$(find rugby)/map/map_amcl.yaml">
+        <remap from="map" to="map_amcl" />
+    </node> -->
+
+</launch>

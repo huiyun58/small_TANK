@@ -115,13 +115,21 @@ def serialRead():
     serin = megaSerial.read(megaSerial.inWaiting())
     rcvbuff = rcvbuff + serin
     time.sleep(0.001)
+    
     try:
+        # rospy.loginfo("try")
         omega_left = float(rcvbuff[rcvbuff.index('ls')+2:rcvbuff.index('rs')])
+        # rospy.loginfo("1")
         omega_right = float(rcvbuff[rcvbuff.index('rs')+2:rcvbuff.index('sum')])
-        megasum = float(rcvbuff[rcvbuff.index('sum')+3:rcvbuff.index('y')])
-        yaw = float(rcvbuff[rcvbuff.index('y')+1:rcvbuff.index('end')])
-        # rospy.loginfo(rcvbuff)
+        # rospy.loginfo("2")
+        # megasum = float(rcvbuff[rcvbuff.index('sum')+3:rcvbuff.index('y')])
+        megasum = float(rcvbuff[rcvbuff.index('sum')+3:rcvbuff.index('end')])
+        # rospy.loginfo("3")
+        # yaw = float(rcvbuff[rcvbuff.index('y')+1:rcvbuff.index('end')])
+        # rospy.loginfo("4")
+        # rospy.loginfo("rcvbuff:%s",rcvbuff)
         if checksum(omega_left, omega_right, megasum):
+            # rospy.loginfo("odometry")
             odometry(omega_left, omega_right)
             vel_feedback_pub = rospy.Publisher('/rugby/vel_feedback',String,queue_size = 10)
             actual_speed = "L" + str(omega_left) + " R" + str(omega_right)

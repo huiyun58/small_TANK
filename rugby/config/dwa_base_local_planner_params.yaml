@@ -2,25 +2,25 @@ planner_frequency: 0.3 #0.3 20170516, CLC
 controller_frequency: 10.0
 
 DWAPlannerROS:
-   max_trans_vel: 0.4  
-   max_vel_x: 0.4 
-   min_vel_x: -0.05 # -0.1 20160725, SW
+   max_trans_vel: 1  
+   max_vel_x: 0.3 
+   min_vel_x: -0.3 # -0.1 20160725, SW
    #min_vel_x: 0.05
    max_vel_y: 0.0  # zero for a differential drive robot
    min_vel_y: 0.0
-   max_rot_vel: 1.2 # 1.5 20170516, CLC 
-   min_rot_vel: 0.5 # 0.7 20170517, CLC 
-   acc_lim_x: 1.5   # 1.5 20170517, CLC
+   max_rot_vel: 2 # 1.5 20170516, CLC 
+   min_rot_vel: 0.7 # 0.7 20170517, CLC 
+   acc_lim_x: 2   # 1.5 20170517, CLC
    acc_lim_y: 0.0  # zero for a differential drive robot
-   acc_lim_theta: 10.0
+   acc_lim_theta: 1
    #acc_lim_theta: 1.0
-   acc_limit_trans: 0.7 #0.7 20170517, CLC
+   acc_limit_trans: 1 #0.7 20170517, CLC
 
 #   holonomic_robot: false
 #   yaw_goal_tolerance: 0.5 # about 6 degrees
 #   xy_goal_tolerance: 0.2  # 1 cm
-   yaw_goal_tolerance: 0.1 
-   xy_goal_tolerance: 0.1  
+   yaw_goal_tolerance: 1 
+   xy_goal_tolerance: 2.5  
 
 #   latch_xy_goal_tolerance: false
    occdist_scale: 0.01

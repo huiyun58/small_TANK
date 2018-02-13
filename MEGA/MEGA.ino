@@ -72,6 +72,7 @@ void readCMD() {
   if (end_index != -1 || recbuf.length() > 50) {
     recbuf = "";
   }
+
 }
 
 //!!!
@@ -103,6 +104,9 @@ void sendFeedBack() {
   //gyro = "y" + String(yaw.Data);
   feedback = speedFb + sumFb + "end";  //feedback = speedFb + sumFb + gyro + "end";
   Serial.print(feedback);
+  //Serial.println(omega_actual_L);
+  //Serial.print(" ");
+  //Serial.println(omega_actual_R);
   recieveComplete = false;
   }
 }
@@ -117,72 +121,78 @@ void getMotorData() {
                  (CPR * gear_ratio);
   EncoderposPreR = EncoderposR;
   EncoderposPreL = EncoderposL;
+  //Serial.print("dT:");
+  //Serial.print(dT);
+  //Serial.print("EncoderposPreR:");
+  //Serial.print(EncoderposPreR);
+  //Serial.print("EncoderposPreL:");
+  //Serial.println(EncoderposPreL);
 }
 
 void doEncoderR() {
   //Serial.println("doEncoderR");
-    pinAState = digitalRead(encoder1PinA);
-    pinBState = digitalRead(encoder1PinB);
-  if (pinAState == 0 && pinBState == 0) {
-    if (pinAStateOld == 1 && pinBStateOld == 0) // forward
+    pinAState1 = digitalRead(encoder1PinA);
+    pinBState1 = digitalRead(encoder1PinB);
+  if (pinAState1 == 0 && pinBState1 == 0) {
+    if (pinAState1Old == 1 && pinBState1Old == 0) // forward
       EncoderposR++;
-    if (pinAStateOld == 0 && pinBStateOld == 1) // reverse
+    if (pinAState1Old == 0 && pinBState1Old == 1) // reverse
       EncoderposR--;
   }
-  if (pinAState == 0 && pinBState == 1) {
-    if (pinAStateOld == 0 && pinBStateOld == 0) // forward
+  if (pinAState1 == 0 && pinBState1 == 1) {
+    if (pinAState1Old == 0 && pinBState1Old == 0) // forward
       EncoderposR++;
-    if (pinAStateOld == 1 && pinBStateOld == 1) // reverse
+    if (pinAState1Old == 1 && pinBState1Old == 1) // reverse
       EncoderposR--;
   }
-  if (pinAState == 1 && pinBState == 1) {
-    if (pinAStateOld == 0 && pinBStateOld == 1) // forward
+  if (pinAState1 == 1 && pinBState1 == 1) {
+    if (pinAState1Old == 0 && pinBState1Old == 1) // forward
       EncoderposR++;
-    if (pinAStateOld == 1 && pinBStateOld == 0) // reverse
+    if (pinAState1Old == 1 && pinBState1Old == 0) // reverse
       EncoderposR--;
   }
-  if (pinAState == 1 && pinBState == 0) {
-    if (pinAStateOld == 1 && pinBStateOld == 1) // forward
+  if (pinAState1 == 1 && pinBState1 == 0) {
+    if (pinAState1Old == 1 && pinBState1Old == 1) // forward
       EncoderposR++;
-    if (pinAStateOld == 0 && pinBStateOld == 0) // reverse
+    if (pinAState1Old == 0 && pinBState1Old == 0) // reverse
       EncoderposR--;
   }
-  pinAStateOld = pinAState;
-  pinBStateOld = pinBState;
+  pinAState1Old = pinAState1;
+  pinBState1Old = pinBState1;
   //Serial.println(EncoderposR);
 }
 
 void doEncoderL() {
   //Serial.println("doEncoderL");
-    pinAState = digitalRead(encoder2PinA);
-    pinBState = digitalRead(encoder2PinB);
-  if (pinAState == 0 && pinBState == 0) {
-    if (pinAStateOld == 1 && pinBStateOld == 0) // forward
+    pinAState2 = digitalRead(encoder2PinA);
+    pinBState2 = digitalRead(encoder2PinB);
+  if (pinAState2 == 0 && pinBState2 == 0) {
+    if (pinAState2Old == 1 && pinBState2Old == 0) // forward
       EncoderposL++;
-    if (pinAStateOld == 0 && pinBStateOld == 1) // reverse
+    if (pinAState2Old == 0 && pinBState2Old == 1) // reverse
       EncoderposL--;
   }
-  if (pinAState == 0 && pinBState == 1) {
-    if (pinAStateOld == 0 && pinBStateOld == 0) // forward
+  if (pinAState2 == 0 && pinBState2 == 1) {
+    if (pinAState2Old == 0 && pinBState2Old == 0) // forward
       EncoderposL++;
-    if (pinAStateOld == 1 && pinBStateOld == 1) // reverse
+    if (pinAState2Old == 1 && pinBState2Old == 1) // reverse
       EncoderposL--;
   }
-  if (pinAState == 1 && pinBState == 1) {
-    if (pinAStateOld == 0 && pinBStateOld == 1) // forward
+  if (pinAState2 == 1 && pinBState2 == 1) {
+    if (pinAState2Old == 0 && pinBState2Old == 1) // forward
       EncoderposL++;
-    if (pinAStateOld == 1 && pinBStateOld == 0) // reverse
+    if (pinAState2Old == 1 && pinBState2Old == 0) // reverse
       EncoderposL--;
   }
 
-  if (pinAState == 1 && pinBState == 0) {
-    if (pinAStateOld == 1 && pinBStateOld == 1) // forward
+  if (pinAState2 == 1 && pinBState2 == 0) {
+    if (pinAState2Old == 1 && pinBState2Old == 1) // forward
       EncoderposL++;
-    if (pinAStateOld == 0 && pinBStateOld == 0) // reverse
+    if (pinAState2Old == 0 && pinBState2Old == 0) // reverse
       EncoderposL--;
   }
-  pinAStateOld = pinAState;
-  pinBStateOld = pinBState;
+  pinAState2Old = pinAState2;
+  pinBState2Old = pinBState2;
   //Serial.println(EncoderposL);
 }
 
@@ -224,12 +234,12 @@ void setup() {
   pinMode(In4, OUTPUT);
   pinMode(EnA, OUTPUT);
   pinMode(EnB, OUTPUT);
-  Serial.begin(57600);      //!!!
+  Serial.begin(1000000);      
   // Serial.begin(57600);
   digitalWrite(EnA, HIGH);
   digitalWrite(EnB, HIGH);
-  double Kp = 30;
-  double Ki = 0.3;
+  double Kp = 0.8;  //8
+  double Ki = 0.01;  //0.045
   double Kd = 0;
 
   pid.setPID(Kp, Ki, Kd);
@@ -240,9 +250,11 @@ void setup() {
 }
 
 void loop() {
-    //readCmd_wheel_angularVel();    //!!!
+    //readCmd_wheel_angularVel();    
     
     readCMD();                   // read from odroid
+    //omega_target_L = 3.0;      //tuning PID
+    //omega_target_R = 3.0;      //tuning PID
     
   if ((millis() - lastMilli) >= LOOPTIME) { // enter timed loop
     dT = millis() - lastMilli;
@@ -250,12 +262,15 @@ void loop() {
 
     getMotorData();    // calculate speed
     //sendFeedback_wheel_angularVel(); // send actually speed to mega   //!!!
-    sendFeedBack();   // send to odroid
+    sendFeedBack();   // send to odroid  //close while tuning PID
     
     
     // compute PWM value from rad/s
-    PWM_val_R = int(pid.calPID(omega_target_R, omega_actual_R, dT));
-    PWM_val_L = int(pid.calPID(omega_target_L, omega_actual_L, dT));
+    PWM_val_R = int(pid.calPID(omega_target_R, omega_actual_R, dT,0));
+    PWM_val_L = int(pid.calPID(omega_target_L, omega_actual_L, dT,1));
+    //Serial.print(omega_target_L);      //tuning PID
+    //Serial.print(" ");                 //tuning PID
+    //Serial.println(omega_actual_L);    //tuning PID
 
     give_PWM(omega_target_R,PWM_val_R,In2,In1); // right motor rotate CW
     give_PWM(omega_target_L,PWM_val_L,In3,In4); // left motor rotate CCW
