@@ -72,6 +72,7 @@ void readCMD() {
   if (end_index != -1 || recbuf.length() > 50) {
     recbuf = "";
   }
+
 }
 
 //!!!
@@ -231,8 +232,8 @@ void setup() {
   // Serial.begin(57600);
   digitalWrite(EnA, HIGH);
   digitalWrite(EnB, HIGH);
-  double Kp = 30;
-  double Ki = 0.1;
+  double Kp = 0.8;
+  double Ki = 0.01;
   double Kd = 0;
 
   pid.setPID(Kp, Ki, Kd);
@@ -246,8 +247,8 @@ void loop() {
     //readCmd_wheel_angularVel();    //!!!
     
     readCMD();                   // read from odroid
-//    omega_target_L = 8.0;
-//    omega_target_R = 0.0;
+    //omega_target_L = 8.0;
+    //omega_target_R = 8.0;
     
   if ((millis() - lastMilli) >= LOOPTIME) { // enter timed loop
     dT = millis() - lastMilli;
@@ -261,9 +262,9 @@ void loop() {
     // compute PWM value from rad/s
     PWM_val_R = int(pid.calPID(omega_target_R, omega_actual_R, dT,0));
     PWM_val_L = int(pid.calPID(omega_target_L, omega_actual_L, dT,1));
-//    Serial.print(omega_target_L);
-//    Serial.print(" ");
-//    Serial.println(omega_actual_L);
+    //Serial.print(omega_target_L);
+    //Serial.print(" ");
+    //Serial.println(omega_actual_L);
 
     give_PWM(omega_target_R,PWM_val_R,In2,In1); // right motor rotate CW
     give_PWM(omega_target_L,PWM_val_L,In3,In4); // left motor rotate CCW
